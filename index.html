@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "style.css">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+    <title>Web Message</title>
+</head>
+<body style="background: rgb(183, 37, 139)">
+    <div class = "contain">
+        <!-- <div id = "writer"> 
+            <img class="avatar" height="50" width="50" src="http://itsolutionstuff.com/frontTheme/images/logo.png"/> Steve
+        </div> -->
+        <div id="quote" class="executed fade ">
+          <p>对不起</p>
+        </div>  
+    </div>
+</body>
+<script>
+    $(document).ready(function() {
+      animate();
+    });
+  
+    $(window).keypress(function(e) {
+      if (e.which === 32) {
+        loadQuote();
+      }
+    });
+  
+    function loadAvatar() {
+      var email = "steven.walsh39@gmail.com"
+      var md5 = $.md5(email);
+      var imgUrl = 'https://gravatar.com/avatar/'+md5+'?&d=404';
+      $.ajax({
+          url:imgUrl,
+          type:"HEAD",
+          crossDomain:true,
+          error:function(){      
+              $(".img").attr("src","http://itsolutionstuff.com/frontTheme/images/logo.png");
+          },
+          success:function(){
+              $(".avatar").attr("src",imgUrl);
+          }
+      });
+    }
+  
+    function loadQuote() {
+      $("#quote").addClass("reset");
+          $("#quote").removeClass("executed");
+          $("#writer").toggleClass("fade");
+          setTimeout(function(){ 
+            $.ajax({
+              crossOrigin: true,
+              url: "https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&_jsonp=mycallback",
+              dataType:"jsonp"
+          });
+          }, 1000); 
+    }
+        
+    function animate() {
+      $("#quote").toggleClass("fade");  
+    }
+        
+    function mycallback(json){
+      var quote = json[0];
+      $("#quote").html(quote.content)
+      $("#writer").html(quote.title)
+      $("#quote").addClass("executed");
+        $("#quote").removeClass("reset");
+        $("#writer").toggleClass("fade");
+    }
+    </script>
+  
+</html>
