@@ -18,13 +18,54 @@
   </head>
   <body id="background" style="background: rgb(183, 37, 139)">
     <div class="contain">
+      
       <div id="quote" class="executed fade">
-        <p>对不起</p>
+        <p></p>
       </div>
+    
+    
     </div>
   </body>
-  <script>
-    const chatSocket = new WebSocket("ws://localhost:8000/ws/test/");
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js";
+  import { getFirestore, getDocs, collection, onSnapshot, doc } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+
+  // const querySnapshot = await getDocs(collection(db, "Quotes"));
+  // querySnapshot.forEach((doc) => {
+  //   console.log(`${doc.data().quotes}`);
+  // });
+
+  const unsub = onSnapshot(doc(db, "Quotes", "XOWEAMedxvx7GBrGfhjA"), (doc) => {
+    var s = doc.data().quotes
+    console.log(s);
+    $("#quote p").text(s);
+});
+
+$(document).ready(function () {
+      animate();
+    });
+    function animate() {
+      $("#quote").toggleClass("fade");
+    }
+  
+</script>
+
+
+    <!-- const chatSocket = new WebSocket("ws://localhost:8000/ws/test/");
 
     chatSocket.onmessage = function (e) {
       console.log(e.data)
@@ -51,5 +92,5 @@
         $("#background").get(0).style.setProperty("background-color", "green")
       }
     });
-  </script>
+  </script> -->
 </html>

@@ -1,10 +1,9 @@
 /*  include <xmp><link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet"></xmp> for the inconsolata font in your HTML file */
 
   html,body {
-    height: 100%;
-    width: 100%;
+    height: 90%;
+    width: 90%;
     display: table;
-    overflow: hidden;
   }
   /* font css */
 
@@ -24,10 +23,14 @@
   #quote{
     color:white;
     font-family : Inconsolata;
-    position: relative;
-    font-weight: bold;
-    font-size:xx-large;
+    position: absolute;
+    display: inline;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    font-size: xx-large;
   }
+
   /* source css */
 
   #writer{
